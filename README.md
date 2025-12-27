@@ -80,25 +80,40 @@ Copy code
 ## Project Structure
 
 Project_2/
+
 ├── main.py
+
 ├── seeds.txt
+
 │
 ├── ingestion/
+
 │ ├── fetcher.py # Async HTTP fetcher
+
 │ └── extractors.py # URL + context extraction
+
 │
 ├── normalization/
+
 │ └── channel.py # Channel name normalization
+
 │
 ├── trust/
+
 │ └── scoring.py # Heuristic scoring logic
+
 │
 ├── validation/
+
 │ ├── stream_probe.py # HEAD/GET stream validation
+
 │ └── classify.py # Stream type classification
+
 │
 ├── player/
+
 │ └── launcher.py # VLC launcher
+
 │
 └── README.md
 
@@ -118,22 +133,23 @@ Project_2/
 
 ### Example
 
-```txt
-https://iptv-org.github.io/iptv/index.m3u
-https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us.m3u
-https://epg.pw/test_channels.m3u
 You can add hundreds or thousands of sources.
 
 Scoring Logic (How URLs Are Ranked)
 Each extracted URL is scored using simple but effective heuristics:
 
 Signal	Score
-Exact channel name in context	+30
-High text similarity	+20
-Medium similarity	+10
-Stream file extension (.m3u8, .ts)	+10
-GitHub source	+5
-Blacklisted keywords	−50
+Exact channel name in context  ->	+30
+
+High text similarity ->	+20
+
+Medium similarity->	+10
+
+Stream file extension (.m3u8, .ts)->	+10
+
+GitHub source->	+5
+
+Blacklisted keywords->	−50
 
 Only URLs with score ≥ 20 survive.
 
@@ -150,21 +166,22 @@ Timeout & SSL failures handled
 
 Result is classified as:
 
-STREAM_HLS
+1) STREAM_HLS
 
-STATIC_ASSET
+2) STATIC_ASSET
 
-UNKNOWN
+3) UNKNOWN
 
 Output Example
 
 
-✔ 1 - https://fox-foxnewsnow.amagi.tv/playlist.m3u8 - HEAD OK [STREAM_HLS]
+✔ 1 - https://tst.abc.tv/playlist.m3u8 - HEAD OK [STREAM_HLS]
 ✘ 2 - http://example.com/broken.m3u8 - No Data [STREAM_HLS]
 Playback (VLC Integration)
 Validated streams can be played directly.
 
 Requirements
+```text
 VLC Media Player installed
 
 VLC path either:
@@ -172,9 +189,10 @@ VLC path either:
 Added to system PATH, or
 
 Hardcoded in player/launcher.py
+```
 
 Playback Flow
-
+```
 Select stream number to play (or Enter to skip): 1
 → VLC launches with the stream URL
 Running the Project
@@ -213,6 +231,3 @@ Many public IPTV sources skew:
 3) LATAM
 
 
-
-
-"# IPTV_scraper" 
